@@ -24,19 +24,40 @@ function init() {
 		ratings.push(homelist[i].rating);
 	}
 	console.log(coordinates[0]);
-	AddHomes(coordinates, ratings);
+	Color(coordinates, ratings);
 	SiteMap.geoObjects.add(homeCollection);
 
 
 }
-function AddHomes(coords, rating) {
+function Color(coords, rating) {
+	var preset = new Array();
+	for (var i = 0; i < rating.length; i++) {
+		if (rating[i] < 20) {
+			preset.push('islands#redIcon');
+		}
+		if (rating[i] > 20 && rating[i] < 50) {
+			preset.push('islands#darkOrangeIcon');
+		}
+		if (rating[i] > 50 && rating[i] < 80) {
+			preset.push('islands#yellowIcon');
+		}
+		if (rating[i] > 80) {
+			preset.push('islands#greenIcon');
+        }
+
+    }
+
+	AddHomes(coordinates, rating, preset);
+}
+function AddHomes(coords, rating, preset) {
 	homeCollection = new ymaps.GeoObjectCollection({}, {
-		preset: 'islands#redDotIconWithCaption'
+		
 	});
 	for (var i = 0; i < coords.length; i++) {
 		homeCollection.add(new ymaps.Placemark([coords[i][0], coords[i][1]], {
-			balloonContent: '',
 			iconCaption: rating[i]
+		}, {
+			preset: preset[i]
 		}));
 	}
 

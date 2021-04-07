@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Jester\\source\\repos\\mapASP\\mapASP\\mapASP.csproj",
+      "projectUniqueName": "C:\\Users\\Jester\\source\\repos\\Graduation\\mapASP\\mapASP\\mapASP.csproj",
       "projectName": "mapASP",
-      "projectPath": "C:\\Users\\Jester\\source\\repos\\mapASP\\mapASP\\mapASP.csproj",
+      "projectPath": "C:\\Users\\Jester\\source\\repos\\Graduation\\mapASP\\mapASP\\mapASP.csproj",
       "packagesPath": "C:\\Users\\Jester\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Jester\\source\\repos\\mapASP\\mapASP\\obj\\",
+      "outputPath": "C:\\Users\\Jester\\source\\repos\\Graduation\\mapASP\\mapASP\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\Jester\\AppData\\Roaming\\NuGet\\NuGet.Config",

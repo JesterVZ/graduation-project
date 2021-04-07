@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Jester\\source\\repos\\MapAPI\\MapAPI\\MapAPI.csproj": {}
+    "C:\\Users\\Jester\\source\\repos\\Graduation\\MapAPI\\MapAPI\\MapAPI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Jester\\source\\repos\\MapAPI\\MapAPI\\MapAPI.csproj": {
+    "C:\\Users\\Jester\\source\\repos\\Graduation\\MapAPI\\MapAPI\\MapAPI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Jester\\source\\repos\\MapAPI\\MapAPI\\MapAPI.csproj",
+        "projectUniqueName": "C:\\Users\\Jester\\source\\repos\\Graduation\\MapAPI\\MapAPI\\MapAPI.csproj",
         "projectName": "MapAPI",
-        "projectPath": "C:\\Users\\Jester\\source\\repos\\MapAPI\\MapAPI\\MapAPI.csproj",
+        "projectPath": "C:\\Users\\Jester\\source\\repos\\Graduation\\MapAPI\\MapAPI\\MapAPI.csproj",
         "packagesPath": "C:\\Users\\Jester\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Jester\\source\\repos\\MapAPI\\MapAPI\\obj\\",
+        "outputPath": "C:\\Users\\Jester\\source\\repos\\Graduation\\MapAPI\\MapAPI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Jester\\AppData\\Roaming\\NuGet\\NuGet.Config",

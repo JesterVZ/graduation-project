@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "6CVhv26gP1Yq3DzyhL05fj1Z0heetCqpstCqRtWVud7IVH6IOCyIe5RImrk1WyYC9Egei7hdjtDMV0cSrF/jEA==",
+  "dgSpecHash": "lQ0lqLCOg8OwYgO1v8QhckGtNVggRGXpbtjNrggjGggVKzaDczZOL8dp4mxLhEPl42LWgI6jfaAilKIBfKywZw==",
   "success": true,
-  "projectFilePath": "C:\\Users\\Jester\\source\\repos\\MapAPI\\MapAPI\\MapAPI.csproj",
+  "projectFilePath": "C:\\Users\\Jester\\source\\repos\\Graduation\\MapAPI\\MapAPI\\MapAPI.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Jester\\.nuget\\packages\\microsoft.aspnet.cors\\5.2.7\\microsoft.aspnet.cors.5.2.7.nupkg.sha512",
     "C:\\Users\\Jester\\.nuget\\packages\\microsoft.aspnet.webapi.client\\5.2.7\\microsoft.aspnet.webapi.client.5.2.7.nupkg.sha512",
