@@ -34,15 +34,19 @@ function Color(coords, rating) {
 	for (var i = 0; i < rating.length; i++) {
 		if (rating[i] < 20) {
 			preset.push('islands#redIcon');
+			continue;
 		}
 		if (rating[i] > 20 && rating[i] < 50) {
 			preset.push('islands#darkOrangeIcon');
+			continue;
 		}
 		if (rating[i] > 50 && rating[i] < 80) {
 			preset.push('islands#yellowIcon');
+			continue;
 		}
 		if (rating[i] > 80) {
 			preset.push('islands#greenIcon');
+			continue;
         }
 
     }
@@ -55,7 +59,7 @@ function AddHomes(coords, rating, preset) {
 	});
 	for (var i = 0; i < coords.length; i++) {
 		homeCollection.add(new ymaps.Placemark([coords[i][0], coords[i][1]], {
-			iconCaption: rating[i]
+			iconCaption: "рейтинг: "+rating[i]+"%" + " id=" + i
 		}, {
 			preset: preset[i]
 		}));

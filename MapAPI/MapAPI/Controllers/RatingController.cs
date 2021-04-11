@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using MySql.Data.MySqlClient;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,16 +17,45 @@ namespace MapAPI.Controllers
         [HttpGet]
         public IEnumerable<Home> Get()
         {
-            var random = new Random();
-            return Enumerable.Range(1, 20).Select(index => new Home
+            using MySqlConnection connection = Connect();
+            connection.Open();
+            MySqlDataReader reader = Reader(connection, "Data");
+            int count = 0;
+            while (reader.Read())
             {
-                coordinates = new double[2] { 
-                    random.NextDouble() * (60-50)+50, 
-                    random.NextDouble() * (60 - 50) + 50 
-                },
-                rating = random.Next(0, 100)
-            })
-            .ToArray();
+                count++;
+            }
+            if(count > 0)
+            {
+                return Enumerable.Range(1, count).Select(index => new Home
+                {
+                    coordinates = new double[2]
+                    {
+                        (double)reader["X"],
+                        (double)reader["Y"]
+                    },
+                    rating = (int)reader["Rating"]
+                }).ToArray();
+            }
+            return null;
+
+        }
+        private MySqlConnection Connect()
+        {
+            return new MySqlConnection("SERVER=localhost; DATABASE=homes;UID=root;PASSWORD=;");
+        }
+        private MySqlDataReader Reader(MySqlConnection connection, string state)
+        {
+            MySqlCommand Command;
+            string commandText;
+            switch (state)
+            {
+                case "Data":
+                    commandText = "SELECT * FROM data";
+                    Command = new MySqlCommand(commandText, connection);
+                    return Command.ExecuteReader();
+            }
+            return null;
         }
     }
 }
