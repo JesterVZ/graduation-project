@@ -7,7 +7,11 @@ namespace MapAPI
 {
     public class Home
     {
-        public double[] coordinates { get; set; }
-        public int rating { get; set; }
+        public int Id { get; set; }
+        public int ApartmentCount { get; set; }
+        public int Numberofdebetors { get; set; }
+        public string Street { get; set; }
+        public int Number { get; set; }
+        public int RepairCount { get; set; }
     }
 }
