@@ -8,6 +8,7 @@ namespace MapAPI
     public class Point
     {
         public string Address { get; set; }
-        public int rating { get; set; }
+        public decimal rating { get; set; }
+        public string error { get; set; }
     }
 }

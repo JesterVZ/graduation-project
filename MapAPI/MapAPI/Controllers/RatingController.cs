@@ -21,7 +21,6 @@ namespace MapAPI.Controllers
             using MySqlConnection connection = Connect();
             using SqlConnection sqlConnection = ConnectToDataBase();
 
-            RatingCalculator ratingCalculator = new RatingCalculator();
             ListFunctions listFunctions = new ListFunctions();
             List<Point> points = new List<Point>();
             List<Home> homes = new List<Home>();
@@ -41,69 +40,26 @@ namespace MapAPI.Controllers
                             Street = (string)reader["street_name"],
                             Number = (int)reader["house_number"]
                         });
-                    }
-                    reader.Close();
-                }
-                if(i == 1)
-                {
-                    for(int j = 0; j < homes.Count; j++)
-                    {
-                        string command = "SELECT * FROM pes_geo_apartments pga WHERE pga.house_id = " + homes[j].Id;
-                        SqlDataReader reader = Reader(sqlConnection, "apartments", command);
-                        int count = 0;
-                        while (reader.Read())
-                        {
-                            count++;
-                        }
-                        homes[j].ApartmentCount = count;
-                        count = 0;
-                        reader.Close();
-                    }
-                }
-                /*
-                if(i == 0)
-                {
-                    MySqlDataReader reader = Reader(connection, "Home");
-                    int count = 0;
-                    while (reader.Read())
-                    {
-                        count++;
-                        listFunctions.FillList(new Home
-                        {
-                            Address = (string)reader["Address"],
-                            ApartmentCount = (int)reader["Apartment_Count"],
-                            Numberofdebetors = (int)reader["Number_of_debetors"],
-                            RepairCount = (int)reader["RepairCount"]
-                        });
-                    }
-                    reader.Close();
-                }
-                if(i == 1)
-                {
-                    MySqlDataReader reader = Reader(connection, "Meter");
-                    int count = 0;
-                    while (reader.Read())
-                    {
-                        count++;
-                        listFunctions.FillList(new Meter
-                        {
-                            Date_of_creation = (DateTime)reader["Date_of_creation"],
-                            Delta = DateTime.Now - (DateTime)reader["Date_of_creation"]
-                        });
-                    }
-                    reader.Close();
-                    for(int k = 0; k < listFunctions.Home.Count; k++)
-                    {
-                        int rating = ratingCalculator.CalculateIndex(listFunctions.Home[k], listFunctions.Meters[k]);
                         points.Add(new Point
                         {
-                            Address = listFunctions.Home[k].Address,
-                            rating = rating
+                            Address = "Пермь, улица "+(string)reader["street_name"] + ", дом " + (int)reader["house_number"]
                         });
                     }
-                    
+                    reader.Close();
                 }
-                */
+                if(i == 1)
+                {
+                    if(homes.Count %2 == 0)
+                    {
+                        int countOfThreads = 2;
+                        for(int j = 0; j < countOfThreads; j++)
+                        {
+
+                        }
+                    }
+                    RatingCalculator(0, homes, points, sqlConnection);
+
+                }
                 if (i == 2)
                 {
                     return points;
@@ -113,7 +69,26 @@ namespace MapAPI.Controllers
             return null;
 
         }
-
+        private void RatingCalculator(int start, List<Home> homes, List<Point> points, SqlConnection sqlConnection)
+        {
+            for (int k = start; k < homes.Count; k++)
+            {
+                SqlDataReader reader = Reader(sqlConnection, "other", "SELECT dbo.Rating(" + homes[k].Id + ") rating");
+                try
+                {
+                    while (reader.Read())
+                    {
+                        points[k].rating = (decimal)reader["rating"];
+                    }
+                    reader.Close();
+                }
+                catch (Exception e)
+                {
+                    points[k].error = e.ToString();
+                    reader.Close();
+                }
+            }
+        }
         private SqlConnection ConnectToDataBase()
         {
             return new SqlConnection("Server=ibm-sql-cl2\\test;Database=general_minus_1;Trusted_Connection=True;");
@@ -130,21 +105,10 @@ namespace MapAPI.Controllers
             switch (state)
             {
                 case "address":
-                    commandText = "SELECT pgh.house_id, 'Пермь' city_nama, pgs.street_name, pgh.house_number, pgh.building FROM pes_geo_houses pgh, pes_geo_streets pgs WHERE pgh.street_id = pgs.street_id AND pgs.city_id =  653435 AND exists (SELECT 1 FROM pes_geo_apartments pga, pes_point_plugins ppp, pes_addendas pa WHERE pga.house_id = pgh.house_id AND pga.apartment_id = ppp.apartment_id AND ppp.addendum_id = pa.addendum_id)";
+                    commandText = "SELECT TOP 10 pgh.house_id, 'Пермь' city_nama, pgs.street_name, pgh.house_number, pgh.building FROM pes_geo_houses pgh, pes_geo_streets pgs WHERE pgh.street_id = pgs.street_id AND pgs.city_id =  653435 AND exists (SELECT 1 FROM pes_geo_apartments pga, pes_point_plugins ppp, pes_addendas pa WHERE pga.house_id = pgh.house_id AND pga.apartment_id = ppp.apartment_id AND ppp.addendum_id = pa.addendum_id)";
                     Command = new SqlCommand(commandText, connection);
                     return Command.ExecuteReader();
-                case "apartments":
-                    commandText = "SELECT COUNT(*) FROM pes_geo_apartments pga WHERE pga.house_id = 628095";
-                    Command = new SqlCommand(commandText, connection);
-                    return Command.ExecuteReader();
-                case "Home":
-                    commandText = "SELECT * FROM home";
-                    Command = new SqlCommand(commandText, connection);
-                    return Command.ExecuteReader();
-                case "Meter":
-                    commandText = "SELECT * FROM meters";
-                    Command = new SqlCommand(commandText, connection);
-                    return Command.ExecuteReader();
+
             }
 
             return null;
@@ -155,7 +119,7 @@ namespace MapAPI.Controllers
             string commandText;
             switch (state)
             {
-                case "apartments":
+                case "other":
                     commandText = command;
                     Command = new SqlCommand(commandText, connection);
                     return Command.ExecuteReader();
