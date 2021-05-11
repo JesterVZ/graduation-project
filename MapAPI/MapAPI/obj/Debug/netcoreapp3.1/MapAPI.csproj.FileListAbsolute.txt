@@ -71,3 +71,4 @@ C:\Users\Jester\source\repos\Graduation\MapAPI\MapAPI\bin\Debug\netcoreapp3.1\ru
 C:\Users\Jester\source\repos\Graduation\MapAPI\MapAPI\bin\Debug\netcoreapp3.1\runtimes\win-x86\native\sni.dll
 C:\Users\Jester\source\repos\Graduation\MapAPI\MapAPI\bin\Debug\netcoreapp3.1\runtimes\unix\lib\netcoreapp2.1\System.Data.SqlClient.dll
 C:\Users\Jester\source\repos\Graduation\MapAPI\MapAPI\bin\Debug\netcoreapp3.1\runtimes\win\lib\netcoreapp2.1\System.Data.SqlClient.dll
+C:\Users\Jester\source\repos\Graduation\MapAPI\MapAPI\bin\Debug\netcoreapp3.1\RestSharp.dll

@@ -1,4 +1,4 @@
-﻿ymaps.ready(init);
+﻿ymaps.ready(test);
 
 var SiteMap;
 var myGeoObject;
@@ -8,10 +8,18 @@ var connection;
 var coordinates = new Array();
 var ratings = new Array();
 
-$.getJSON("https://localhost:44391/api/Rating", function (data) {
-	homelist = data;
-});
 
+function jsonGETTER() {
+	$.getJSON("https://localhost:44391/api/Rating", function (data) {
+		homelist = data;
+		alert("ready" + homelist.length);
+		init();
+	});
+}
+function test() {
+	jsonGETTER();
+	//init();
+}
 function init() {
 	SiteMap = new ymaps.Map('map', {
 		center: [55.674, 37.601],
@@ -20,7 +28,7 @@ function init() {
 		searchControlProvider: 'yandex#search'
 	});
 	for (var i = 0; i < homelist.length; i++) {
-		coordinates.push(homelist[i].coordinates);
+		coordinates.push(homelist[i].coords);
 		ratings.push(homelist[i].rating);
 	}
 	console.log(coordinates[0]);
