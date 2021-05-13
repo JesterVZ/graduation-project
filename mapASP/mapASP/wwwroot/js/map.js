@@ -22,7 +22,7 @@ function test() {
 }
 function init() {
 	SiteMap = new ymaps.Map('map', {
-		center: [55.674, 37.601],
+		center: [57.999878, 56.246969],
 		zoom: 11
 	}, {
 		searchControlProvider: 'yandex#search'
@@ -32,16 +32,21 @@ function init() {
 		ratings.push(homelist[i].rating);
 	}
 	console.log(coordinates[0]);
-	Color(coordinates, ratings);
+	Color(coordinates, ratings, homelist);
 	SiteMap.geoObjects.add(homeCollection);
 
 
 }
-function Color(coords, rating) {
+function Color(coords, rating, homeList) {
 	var preset = new Array();
 	for (var i = 0; i < rating.length; i++) {
+		if (homeList[i].error != null) {
+			preset.push('islands#grayIcon');
+			continue;
+        }
 		if (rating[i] < 20) {
 			preset.push('islands#redIcon');
+
 			continue;
 		}
 		if (rating[i] > 20 && rating[i] < 50) {

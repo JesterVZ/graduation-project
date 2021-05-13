@@ -102,17 +102,26 @@ namespace MapAPI.Controllers
         }
         private void RatingCalculator(int start, List<Home> homes, List<Result> points, SqlConnection sqlConnection, MySqlConnection mySqlConnection, bool key)
         {
+            Answer answer = new Answer();
+
             if (key)
             {
                 for (int k = start; k < homes.Count; k++)
                 {
+                    points[k].coords = new double[2];
                     SqlDataReader reader = Reader(sqlConnection, "other", "SELECT dbo.Rating(" + homes[k].Id + ") rating");
                     try
                     {
                         while (reader.Read())
                         {
-                            var s = JsonConvert.DeserializeObject<Answer>(Request + API_key + points[k].Address);
+                            string link = Request + API_key + "&geocode=" + points[k].Address;
+                            string jsonString = new WebClient().DownloadString(link);
+                            answer = JsonConvert.DeserializeObject<Answer>(jsonString);
+                            string[] coords = answer.Response.GeoObjectCollection.FeatureMember[0].GeoObject.Point.Pos.Split(' ');
+
                             points[k].rating = (decimal)reader["rating"];
+                            points[k].coords[0] = Convert.ToDouble(coords[1], CultureInfo.InvariantCulture);
+                            points[k].coords[1] = Convert.ToDouble(coords[0], CultureInfo.InvariantCulture);
                         }
                         reader.Close();
                     }
@@ -124,7 +133,7 @@ namespace MapAPI.Controllers
                 }
             } else
             {
-                Answer answer = new Answer();
+                
 
                 for (int i = start; i < homes.Count; i++)
                 {
@@ -132,6 +141,7 @@ namespace MapAPI.Controllers
                     MySqlDataReader reader = LocalReader(mySqlConnection, "SELECT rating FROM rating WHERE Id = "+homes[i].Id);
                     while (reader.Read())
                     {
+
                         string link = Request + API_key + "&geocode=" + points[i].Address;
                         string jsonString = new WebClient().DownloadString(link);
                         answer = JsonConvert.DeserializeObject<Answer>(jsonString);
@@ -162,7 +172,7 @@ namespace MapAPI.Controllers
             switch (state)
             {
                 case "address":
-                    commandText = "SELECT TOP 100 pgh.house_id, 'Пермь' city_nama, pgs.street_name, pgh.house_number, pgh.building FROM pes_geo_houses pgh, pes_geo_streets pgs WHERE pgh.street_id = pgs.street_id AND pgs.city_id =  653435 AND exists (SELECT 1 FROM pes_geo_apartments pga, pes_point_plugins ppp, pes_addendas pa WHERE pga.house_id = pgh.house_id AND pga.apartment_id = ppp.apartment_id AND ppp.addendum_id = pa.addendum_id)";
+                    commandText = "SELECT TOP 10 pgh.house_id, 'Пермь' city_nama, pgs.street_name, pgh.house_number, pgh.building FROM pes_geo_houses pgh, pes_geo_streets pgs WHERE pgh.street_id = pgs.street_id AND pgs.city_id =  653435 AND exists (SELECT 1 FROM pes_geo_apartments pga, pes_point_plugins ppp, pes_addendas pa WHERE pga.house_id = pgh.house_id AND pga.apartment_id = ppp.apartment_id AND ppp.addendum_id = pa.addendum_id)";
                     Command = new SqlCommand(commandText, connection);
                     return Command.ExecuteReader();
 
