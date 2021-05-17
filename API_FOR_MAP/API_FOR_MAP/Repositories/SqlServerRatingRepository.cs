@@ -29,7 +29,7 @@ namespace API_FOR_MAP.Repositories
             using SqlDataReader reader = await command.ExecuteReaderAsync();
             List<Result> results = new List<Result>();
 
-            results = reader.Cast<IDataRecord>().Select(x => new Result(address: reader["Address"] as string, x: Convert.ToSingle(reader["X"]), y: Convert.ToSingle(reader["Y"]), rating: (decimal)reader["Rating"])).ToList<Result>();
+            results = reader.Cast<IDataRecord>().Select(x => new Result(address: reader["Address"] as string, x: Convert.ToSingle(reader["X"]), y: Convert.ToSingle(reader["Y"]), rating: (decimal)reader["Rating"], debetorIndex: (decimal)reader["DebetorIndex"], meterIndex: (decimal)reader["MeterIndex"], requestIndex: (decimal)reader["RepairIndex"])).ToList<Result>();
             return results;
         }
         private SqlConnection CreateConnection()

@@ -64,6 +64,51 @@ namespace RetingGetter
                         Results[k].error = e.ToString();
                         reader.Close();
                     }
+                    reader = Connection.Reader(SqlConnection, "other", "SELECT dbo.MeterIndex("+Homes[k].Id+") meter");
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            Results[k].MeterIndex = (decimal)reader["meter"];
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Results[k].error = e.ToString();
+                        reader.Close();
+                    }
+
+
+                    reader = Connection.Reader(SqlConnection, "other", "SELECT dbo.DebetorIndex(" + Homes[k].Id + ") debetor");
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            Results[k].DebetorIndex = (decimal)reader["debetor"];
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Results[k].error = e.ToString();
+                        reader.Close();
+                    }
+
+                    reader = Connection.Reader(SqlConnection, "other", "SELECT dbo.RequestIndexFunc(" + Homes[k].Id + ") request");
+                    try
+                    {
+                        while (reader.Read())
+                        {
+                            Results[k].RepairIndex = (decimal)reader["request"];
+                        }
+                        reader.Close();
+                    }
+                    catch (Exception e)
+                    {
+                        Results[k].error = e.ToString();
+                        reader.Close();
+                    }
                 }
             } else
             {

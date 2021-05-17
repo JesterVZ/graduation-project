@@ -39,12 +39,13 @@ function init() {
 }
 function Color(coords, rating, homeList) {
 	var preset = new Array();
+
 	for (var i = 0; i < rating.length; i++) {
 		if (homeList[i].error != null) {
-			preset.push('islands#grayIcon');
+			//preset.push('islands#grayIcon');
 			continue;
         }
-		if (rating[i] < 20) {
+		/*if (rating[i] < 20) {
 			preset.push('islands#redIcon');
 
 			continue;
@@ -61,21 +62,26 @@ function Color(coords, rating, homeList) {
 		if (rating[i] >= 80) {
 			preset.push('islands#greenIcon');
 			continue;
-        }
+        }*/
+		var green = Math.round((rating[i] / 100) * 255);
+		var red = 255 - green;
+		preset.push('RGB(' + red + ',' + green + ',0)');
 
     }
 
-	AddHomes(coordinates, rating, preset);
+	AddHomes(coordinates, rating, preset, homeList);
 }
-function AddHomes(coords, rating, preset) {
+
+function AddHomes(coords, rating, preset, homelist) {
 	homeCollection = new ymaps.GeoObjectCollection({}, {
 		
 	});
 	for (var i = 0; i < coords.length; i++) {
 		homeCollection.add(new ymaps.Placemark([coords[i][0], coords[i][1]], {
-			iconCaption: "рейтинг: "+rating[i]+"%" + " id=" + i
+			balloonContent: "рейтинг: " + rating[i] + "% <br> Индекс задолженности дома: " + homelist[i].debetorIndex + "% <br> Индекс счетчиков: " + homelist[i].meterIndex + "% <br> Индекс заявок на ремонт: " + homelist[i].repairIndex
 		}, {
-			preset: preset[i]
+				preset: 'islands#circleIcon',
+				iconColor: preset[i]
 		}));
 	}
 
