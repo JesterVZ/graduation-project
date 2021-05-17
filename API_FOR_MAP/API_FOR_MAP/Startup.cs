@@ -59,6 +59,8 @@ namespace API_FOR_MAP
 
             app.UseRouting();
 
+            app.UseCors();
+
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>

@@ -27,7 +27,9 @@ namespace API_FOR_MAP.Repositories
             string commandText = "SELECT * FROM Results";
             SqlCommand command = new SqlCommand(commandText, connection);
             using SqlDataReader reader = await command.ExecuteReaderAsync();
-            Result[] results = reader.Cast<IDataRecord>().Select(x => new Result(address: reader["Address"] as string, x: Convert.ToSingle(reader["X"]), y: Convert.ToSingle(reader["Y"]), rating: (decimal)reader["Rating"])).ToArray();
+            List<Result> results = new List<Result>();
+
+            results = reader.Cast<IDataRecord>().Select(x => new Result(address: reader["Address"] as string, x: Convert.ToSingle(reader["X"]), y: Convert.ToSingle(reader["Y"]), rating: (decimal)reader["Rating"])).ToList<Result>();
             return results;
         }
         private SqlConnection CreateConnection()

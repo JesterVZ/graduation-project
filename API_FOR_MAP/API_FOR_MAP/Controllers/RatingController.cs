@@ -20,6 +20,7 @@ namespace API_FOR_MAP.Controllers
         [HttpGet]
         public async Task<IReadOnlyCollection<Result>> GetRatingAsync()
         {
+
             IReadOnlyCollection<Result> houses = await _ratingService.GetHousesAsync();
             return houses;
         }

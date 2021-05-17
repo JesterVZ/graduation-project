@@ -44,6 +44,7 @@ namespace RetingGetter
                 try
                 {
                     command.ExecuteNonQuery();
+                    Console.WriteLine(i);
                     //log.Info("Добавлен дом по адресу" + Results[i].Address + "С рейтингом " + Results[i].rating);
                 }
                 catch(Exception e)

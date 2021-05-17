@@ -25,7 +25,7 @@ namespace RetingGetter
             switch (state)
             {
                 case "address":
-                    commandText = "SELECT TOP 10 pgh.house_id, 'Пермь' city_nama, pgs.street_name, pgh.house_number, pgh.building FROM pes_geo_houses pgh, pes_geo_streets pgs WHERE pgh.street_id = pgs.street_id AND pgs.city_id =  653435 AND exists (SELECT 1 FROM pes_geo_apartments pga, pes_point_plugins ppp, pes_addendas pa WHERE pga.house_id = pgh.house_id AND pga.apartment_id = ppp.apartment_id AND ppp.addendum_id = pa.addendum_id)";
+                    commandText = "SELECT TOP 1000 pgh.house_id, 'Пермь' city_nama, pgs.street_name, pgh.house_number, pgh.building FROM pes_geo_houses pgh, pes_geo_streets pgs WHERE pgh.street_id = pgs.street_id AND pgs.city_id =  653435 AND exists (SELECT 1 FROM pes_geo_apartments pga, pes_point_plugins ppp, pes_addendas pa WHERE pga.house_id = pgh.house_id AND pga.apartment_id = ppp.apartment_id AND ppp.addendum_id = pa.addendum_id)";
                     Command = new SqlCommand(commandText, connection);
                     return Command.ExecuteReader();
 

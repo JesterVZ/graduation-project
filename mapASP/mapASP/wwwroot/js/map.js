@@ -10,10 +10,10 @@ var ratings = new Array();
 
 
 function jsonGETTER() {
-	$.getJSON("https://localhost:44391/api/Rating", function (data) {
+	$.getJSON("https://localhost:44323/api/Rating", function (data) {
 		homelist = data;
 		alert("ready" + homelist.length);
-		init();
+		init();	
 	});
 }
 function test() {
@@ -49,15 +49,16 @@ function Color(coords, rating, homeList) {
 
 			continue;
 		}
-		if (rating[i] > 20 && rating[i] < 50) {
+		
+		if (rating[i] >= 20 && rating[i] < 50) {
 			preset.push('islands#darkOrangeIcon');
 			continue;
 		}
-		if (rating[i] > 50 && rating[i] < 80) {
+		if (rating[i] >= 50 && rating[i] < 80) {
 			preset.push('islands#yellowIcon');
 			continue;
 		}
-		if (rating[i] > 80) {
+		if (rating[i] >= 80) {
 			preset.push('islands#greenIcon');
 			continue;
         }
