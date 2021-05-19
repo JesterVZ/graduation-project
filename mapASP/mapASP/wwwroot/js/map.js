@@ -78,7 +78,7 @@ function AddHomes(coords, rating, preset, homelist) {
 	});
 	for (var i = 0; i < coords.length; i++) {
 		homeCollection.add(new ymaps.Placemark([coords[i][0], coords[i][1]], {
-			balloonContent: "рейтинг: " + rating[i] + "% <br> Индекс задолженности дома: " + homelist[i].debetorIndex + "% <br> Индекс счетчиков: " + homelist[i].meterIndex + "% <br> Индекс заявок на ремонт: " + homelist[i].repairIndex
+			balloonContent: "рейтинг: " + rating[i] + " <br> <span>Индекс задолженности дома:</span> " + homelist[i].debetorIndex + " <br> <span>Индекс счетчиков:</span> " + homelist[i].meterIndex + " <br> <span> Индекс заявок на ремонт: </span>" + homelist[i].repairIndex
 		}, {
 				preset: 'islands#circleIcon',
 				iconColor: preset[i]
