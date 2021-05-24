@@ -32,9 +32,11 @@ namespace RetingGetter
             SqlConnection.Open();
             for (int i = 0; i < Results.Count; i++)
             {
-                string commandText = "INSERT INTO Results (Address, X, Y, Rating, DebetorIndex, MeterIndex, RepairIndex) VALUES (@Address, @X, @Y, @Rating, @debetor, @meter, @repair);";
+                string commandText = "INSERT INTO Results (Id, Address, X, Y, Rating, DebetorIndex, MeterIndex, RepairIndex) VALUES (@Id, @Address, @X, @Y, @Rating, @debetor, @meter, @repair);";
                 //string commandText = "UPDATE general_minus_1.dbo.Results SET DebetorIndex = @debetor, MeterIndex = @meter, RepairIndex = @repair WHERE Id = @id ;";
                 SqlCommand command = new SqlCommand(commandText, sqlConnection);
+                SqlParameter Id = new SqlParameter("@Id", Homes[i].Id);
+                command.Parameters.Add(Id);
                 SqlParameter debetor = new SqlParameter("@debetor", Results[i].DebetorIndex);
                 command.Parameters.Add(debetor);
                 SqlParameter meter = new SqlParameter("@meter", Results[i].MeterIndex);
